@@ -2,10 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using great_challenge.Abstract;
+using great_challenge.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,7 +28,12 @@ namespace great_challenge
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddEntityFrameworkSqlServer().AddDbContext<greatContext>(opt =>
+                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddControllers();
+
+            services.AddTransient(typeof(IGreatRepository<>), typeof(GreatRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
