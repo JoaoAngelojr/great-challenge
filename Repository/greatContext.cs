@@ -10,14 +10,14 @@ namespace great_challenge.Repository
 
         public greatContext(DbContextOptions<greatContext> options) : base(options) { }
 
-        public virtual DbSet<User> Store { get; set; }
+        public virtual DbSet<User> User { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder
-                  .UseSqlServer("Host=YOUR_HOST;Database=DB_NAME;Username=DB_USER;Password=DB_PASSWORD");
+                .UseSqlServer(@"Server=LOCAL_DESKTOP;Database=DB_NAME;Trusted_Connection=True;");
             }
         }
     }
