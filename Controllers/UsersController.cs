@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using great_challenge.Abstract;
 using great_challenge.BLL;
 using great_challenge.Models;
+using great_challenge.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -25,10 +26,10 @@ namespace great_challenge.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> CreateUser(User user)
+        public async Task<ActionResult<User>> CreateUser(UserViewModel user)
         {
-            await _usersBll.Create(user);
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+            var newUser = await _usersBll.CreateUser(user);
+            return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
         }
 
         [HttpGet("{id}")]
