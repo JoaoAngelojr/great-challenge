@@ -59,6 +59,12 @@ namespace great_challenge.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Cpf")
+                        .IsUnique();
+
+                    b.HasIndex("Rg")
+                        .IsUnique();
+
                     b.ToTable("User");
                 });
 #pragma warning restore 612, 618

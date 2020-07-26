@@ -34,6 +34,7 @@ namespace great_challenge
             services.AddControllers();
 
             services.AddTransient(typeof(IGreatRepository<>), typeof(GreatRepository<>));
+            services.AddScoped<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

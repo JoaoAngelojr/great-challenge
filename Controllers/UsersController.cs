@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using great_challenge.Abstract;
 using great_challenge.BLL;
 using great_challenge.Models;
+using great_challenge.Functions;
 using great_challenge.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,19 +18,28 @@ namespace great_challenge.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IGreatRepository<User> _greatRepository;
+        private readonly IUserRepository _userRepository;
         private readonly UsersBLL _usersBll;
 
-        public UsersController(IGreatRepository<User> greatRepository)
+        public UsersController(IGreatRepository<User> greatRepository, IUserRepository userRepository)
         {
             _greatRepository = greatRepository;
+            _userRepository = userRepository;
             _usersBll = new UsersBLL(_greatRepository);
         }
 
         [HttpPost]
         public async Task<ActionResult<User>> CreateUser(UserViewModel user)
         {
-            var newUser = await _usersBll.CreateUser(user);
-            return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
+            try
+            {
+                User newUser = await _usersBll.CreateUser(user);
+                return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.InnerException.Message);
+            }
         }
 
         [HttpGet("{document}")]
@@ -37,16 +47,30 @@ namespace great_challenge.Controllers
         {
             try
             {
-                var user = await _usersBll.GetUser(document);
+                var user = await _userRepository.GetUserByCpfOrRg(document);
 
                 if (user == null)
                     return NotFound();
 
                 return user;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.InnerException.Message);
+            }
+        }
+
+        [HttpGet()]
+        [Route("~/api/users/search/{expression}")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsersByName(string expression)
+        {
+            try
+            {
+                return (await _usersBll.GetUsersByName(expression)).ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.InnerException.Message);
             }
         }
 
@@ -57,9 +81,9 @@ namespace great_challenge.Controllers
             {
                 return (await _usersBll.GetAll()).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.InnerException.Message);
             }
         }
 
@@ -68,16 +92,16 @@ namespace great_challenge.Controllers
         {
             try
             {
-                var user = await _usersBll.GetUser(document);
+                var user = await _userRepository.GetUserByCpfOrRg(document);
 
                 if (user == null) return NotFound();
 
                 await _usersBll.Delete(user.Id);
                 return NoContent();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.InnerException.Message);
             }
         }
     }

@@ -20,5 +20,16 @@ namespace great_challenge.Repository
                 .UseSqlServer(@"Server=LOCAL_DESKTOP;Database=DB_NAME;Trusted_Connection=True;");
             }
         }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<User>()
+                .HasIndex(u => u.Cpf)
+                .IsUnique();
+
+            builder.Entity<User>()
+                .HasIndex(u => u.Rg)
+                .IsUnique();
+        }
     }
 }

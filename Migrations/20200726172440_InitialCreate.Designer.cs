@@ -10,7 +10,7 @@ using great_challenge.Repository;
 namespace great_challenge.Migrations
 {
     [DbContext(typeof(greatContext))]
-    [Migration("20200725170322_InitialCreate")]
+    [Migration("20200726172440_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,12 @@ namespace great_challenge.Migrations
                         .HasMaxLength(13);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Cpf")
+                        .IsUnique();
+
+                    b.HasIndex("Rg")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });

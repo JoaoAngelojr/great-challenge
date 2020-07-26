@@ -25,6 +25,18 @@ namespace great_challenge.Migrations
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_Cpf",
+                table: "User",
+                column: "Cpf",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_Rg",
+                table: "User",
+                column: "Rg",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
