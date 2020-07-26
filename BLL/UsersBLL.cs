@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using great_challenge.Abstract;
 using great_challenge.Models;
@@ -27,6 +28,20 @@ namespace great_challenge.BLL
 
             await this.Create(newUser);
             return newUser;
+        }
+
+        public async Task<User> GetUser(string document) 
+        {
+            if(document.Length == 11)
+            {
+                var user = (await GetAll()).ToList().Find(x => x.Cpf == document);
+                return user;
+            }
+            else
+            {
+                var user = (await GetAll()).ToList().Find(x => x.Rg == document);
+                return user;
+            }
         }
     }
 }

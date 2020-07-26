@@ -32,12 +32,12 @@ namespace great_challenge.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = newUser.Id }, newUser);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(long id)
+        [HttpGet("{document}")]
+        public async Task<ActionResult<User>> GetUser(string document)
         {
             try
             {
-                var user = await _usersBll.Find(id);
+                var user = await _usersBll.GetUser(document);
 
                 if (user == null)
                     return NotFound();
@@ -63,15 +63,22 @@ namespace great_challenge.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(long id)
+        [HttpDelete("{document}")]
+        public async Task<IActionResult> DeleteUser(string document)
         {
-            var canDelete = await _usersBll.Exists(id);
+            try
+            {
+                var user = await _usersBll.GetUser(document);
 
-            if (!canDelete) return NotFound();
+                if (user == null) return NotFound();
 
-            await _usersBll.Delete(id);
-            return NoContent();
+                await _usersBll.Delete(user.Id);
+                return NoContent();
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
         }
     }
 }
