@@ -10,5 +10,8 @@ namespace great_challenge.ViewModel
         public string BirthDate { get; set; }
         public string MothersName { get; set; }
         public string FathersName { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string UserRole { get; set; }
     }
 }

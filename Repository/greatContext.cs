@@ -12,15 +12,6 @@ namespace great_challenge.Repository
 
         public virtual DbSet<User> User { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder
-                .UseSqlServer(@"Server=LOCAL_DESKTOP;Database=DB_NAME;Trusted_Connection=True;");
-            }
-        }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>()

@@ -41,6 +41,9 @@ namespace great_challenge.BLL
             newUser.RegistrationDate = DateTime.Now;
             newUser.MothersName = user.MothersName;
             newUser.FathersName = user.FathersName;
+            newUser.UserName = user.UserName;
+            newUser.Password = user.Password;
+            newUser.UserRole = user.UserRole;
 
             await this.Create(newUser);
             return newUser;

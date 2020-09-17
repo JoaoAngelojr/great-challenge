@@ -49,6 +49,10 @@ namespace great_challenge.Migrations
                         .HasColumnType("nvarchar(450)")
                         .HasMaxLength(450);
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
@@ -56,6 +60,14 @@ namespace great_challenge.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(13)")
                         .HasMaxLength(13);
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserRole")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

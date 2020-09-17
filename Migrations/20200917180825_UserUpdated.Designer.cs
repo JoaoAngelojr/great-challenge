@@ -10,8 +10,8 @@ using great_challenge.Repository;
 namespace great_challenge.Migrations
 {
     [DbContext(typeof(greatContext))]
-    [Migration("20200917174059_UserNameAndPassword")]
-    partial class UserNameAndPassword
+    [Migration("20200917180825_UserUpdated")]
+    partial class UserUpdated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

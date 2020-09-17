@@ -10,6 +10,8 @@ using great_challenge.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
+using great_challenge.Security;
 
 namespace great_challenge.Controllers
 {
@@ -29,6 +31,7 @@ namespace great_challenge.Controllers
         }
 
         [HttpPost]
+        [Authorize(Policy = Policies.Admin)]
         public async Task<ActionResult<User>> CreateUser(UserViewModel user)
         {
             try

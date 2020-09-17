@@ -26,9 +26,17 @@ namespace great_challenge.Controllers
         private readonly IUserRepository _userRepository;
         private readonly UsersBLL _usersBll;
 
-        public LoginController(IConfiguration config)
+        public LoginController
+        (
+            IConfiguration config,
+            IGreatRepository<User> greatRepository,
+            IUserRepository userRepository
+        )
         {
             _config = config;
+            _greatRepository = greatRepository;
+            _userRepository = userRepository;
+            _usersBll = new UsersBLL(_greatRepository);
         }
 
         [HttpPost]
@@ -59,7 +67,7 @@ namespace great_challenge.Controllers
 
         string GenerateJWTToken(User userInfo)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt: SecretKey"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:SecretKey"]));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -71,8 +79,8 @@ namespace great_challenge.Controllers
             };
 
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt: Issuer"],
-                audience: _config["Jwt: Audience"],
+                issuer: _config["Jwt:Issuer"],
+                audience: _config["Jwt:Audience"],
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(30),
                 signingCredentials: credentials
