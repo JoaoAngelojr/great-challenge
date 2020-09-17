@@ -1,6 +1,6 @@
-# Desafio GREAT
+# Hiring process - GREat Laboratory
 
-Web API developed for Group of Computer Networks, Software Engineering and Systems (GREat) hiring process.
+A Web API developed for Group of Computer Networks, Software Engineering and Systems (GREat) hiring process.
 
 ## Getting Started
 
