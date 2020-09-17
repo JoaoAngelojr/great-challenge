@@ -31,7 +31,7 @@ Before applying migrations, make sure that dotnet ef is installed:
 dotnet tool install --global dotnet-ef
 ```
 
-Aplique os migrations com o comando:
+Apply the migrations with the command:
 
 ```
 dotnet ef database update
