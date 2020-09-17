@@ -35,5 +35,14 @@ namespace great_challenge.Models
 
         [Required]
         public DateTime RegistrationDate { get; set; }
+
+        [Required]
+        public string UserName { get; set; }
+
+        [Required]
+        public string Password { get; set; }
+
+        [Required]
+        public string UserRole { get; set; }
     }
 }
